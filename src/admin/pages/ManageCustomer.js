@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const ManageCustomer = () => {
+    useEffect(() => {
+        console.log("ddd")
+        
+    }, [])
     return (
-        <div>
-            
-        </div>
+        <>
+            회원 관리
+        </>
     )
 }
 

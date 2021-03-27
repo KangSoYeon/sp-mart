@@ -2,9 +2,9 @@ import React from 'react'
 
 const ManageProduct = () => {
     return (
-        <div>
-            
-        </div>
+        <>
+            상품 관리
+        </>
     )
 }
 
