@@ -13,7 +13,6 @@ const NewProduct = () => {
         tempImageRef.put(file).then(() => {
             console.log("ddd")
         })
-        
     }
 
     return (
