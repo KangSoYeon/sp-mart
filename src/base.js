@@ -3,9 +3,10 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/functions";
 import "firebase/database";
+import "firebase/storage";
 import "firebase/analytics";
 
-var firebaseConfig = {
+const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
     projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
