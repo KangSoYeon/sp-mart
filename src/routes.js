@@ -19,8 +19,7 @@ import SignUp from './shop/pages/SignUp'
 import Cart from './shop/pages/Cart'
 import MyPage from './shop/pages/MyPage'
 
-const routes = [
-  {
+const routes = [{
     path: 'admin',
     element: < AdminMain />,
     children: [
