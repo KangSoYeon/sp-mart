@@ -15,7 +15,9 @@ const SignIn = () => {
             await app
               .auth()
               .signInWithEmailAndPassword(email.value, password.value);
-            navigate('/', {replace:true});
+            
+            window.location.replace('/');
+            // navigate('/', {replace:false});
           } catch (error) {
             alert(error);
           }

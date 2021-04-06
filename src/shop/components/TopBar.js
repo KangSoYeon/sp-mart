@@ -9,7 +9,7 @@ const TopBar = () => {
     //탑바 실시간으로 안바뀌는 문제 해결~~ 
     const { currentUser } = useContext(AuthContext);
     const [mode, setMode] = useState("guest")
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         if (!!currentUser) { //login
@@ -20,18 +20,21 @@ const TopBar = () => {
                 setMode("member")
             }
         }
+        console.log(mode)
     }, [mode])
 
     const signOut = () => {
         app.auth().signOut().then(() => {
             setMode("guest")
-            navigate('/', { replace: true });
+            window.location.replace('/');
+            // navigate('/', { replace: true });
         })
     }
 
-    if (mode === "guest") {
-        return (
-            <>
+
+    return (
+        <>
+            { mode === "guest" && <>
                 <Button
                     to={"/signIn"}
                     component={RouterLink}>
@@ -42,60 +45,40 @@ const TopBar = () => {
                     component={RouterLink}>
                     회원가입
                 </Button>
+            </>}
+
+            {mode != "guest" && <>
+                {currentUser.email}
                 <Button
-                    to={"/cart"}
+                    onClick={signOut}>
+                    로그아웃
+                    </Button>
+
+                <Button
+                    to={"/myPage"}
                     component={RouterLink}>
-                    장바구니
-                </Button>
+                    마이페이지
+                    </Button>
+
             </>
-        )
-    } else if (mode === "member") {
-        return (
-            <div>
-                {currentUser.email}
-                <Button
-                    onClick={signOut}>
-                    로그아웃
-                </Button>
-                <Button
-                    to={"/cart"}
-                    component={RouterLink}>
-                    장바구니
-                </Button>
-                <Button
-                    to={"/myPage"}
-                    component={RouterLink}>
-                    마이페이지
-                </Button>
-            </div>
-        )
-    } else if (mode === "manager") {
-        return (
-            <div>
-                {currentUser.email}
-                <Button
-                    onClick={signOut}>
-                    로그아웃
-                </Button>
-                <Button
-                    to={"/cart"}
-                    component={RouterLink}>
-                    장바구니
-                </Button>
-                <Button
-                    to={"/myPage"}
-                    component={RouterLink}>
-                    마이페이지
-                </Button>
+            }
+            <Button
+                to={"/cart"}
+                component={RouterLink}>
+                장바구니
+                    </Button>
+
+            {mode === "manager" && <>
                 <Button
                     to={"/admin"}
                     component={RouterLink}>
                     관리자페이지
-                </Button>
+                    </Button>
+            </>
+            }
+        </>
+    )
 
-            </div>
-        )
-    }
 }
 
 export default TopBar
