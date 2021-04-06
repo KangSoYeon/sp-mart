@@ -31,7 +31,6 @@ const TopBar = () => {
         })
     }
 
-
     return (
         <>
             { mode === "guest" && <>
