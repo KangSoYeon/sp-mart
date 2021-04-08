@@ -1,10 +1,14 @@
 import React from 'react'
+import Product from '../../domain/Product'
 
-const ProductDetail = ({ match }) => {
+const ProductDetail = (props) => {
+    // const p = new Product({props});
+    console.log(props)
+    const {code, name} = props;
     return (
         <>
-            productDetail
-            {match.params.id}
+            <div>{code}</div>
+            <div>{name}</div>
         </>
     )
 }

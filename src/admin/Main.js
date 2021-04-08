@@ -2,7 +2,7 @@ import React from 'react'
 import AdminNav from './AdminNav'
 import { Typography } from "@material-ui/core"
 import { Outlet } from 'react-router-dom'
-import TopBar from '../shop/components/TopBar'
+import Header from '../shop/components/Header'
 
 const Admin = () => {
 
@@ -27,7 +27,7 @@ const Admin = () => {
 
     return (
         <>
-            <TopBar/>
+            <Header/>
             <Typography
                 color="textPrimary"
                 variant="h4">

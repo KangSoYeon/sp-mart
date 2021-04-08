@@ -11,7 +11,7 @@ const Main = () => {
     return (
         <div>
             <Header />
-            <TopBar />
+            {/* <TopBar /> */}
             <NavBar />
             요기 제목~
             <Outlet />
