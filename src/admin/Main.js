@@ -1,10 +1,24 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import AdminNav from './AdminNav'
 import { Typography } from "@material-ui/core"
 import { Outlet } from 'react-router-dom'
 import Header from '../shop/components/Header'
+import { AuthContext } from '../AuthForm'
 
 const Admin = () => {
+    const { currentUser } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (!!currentUser) {
+            if (currentUser.email !== "admin@sp.com") {
+                alert("접근 권한이 없습니다.")
+                window.location.replace('/');
+            }
+        } else {
+            alert("접근 권한이 없습니다.")
+            window.location.replace('/');
+        }
+    }, [])
 
     const items = [
         {
@@ -27,7 +41,7 @@ const Admin = () => {
 
     return (
         <>
-            <Header/>
+            <Header />
             <Typography
                 color="textPrimary"
                 variant="h4">

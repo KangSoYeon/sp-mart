@@ -4,6 +4,7 @@ import { NavLink as RouterLink } from 'react-router-dom'
 import { AuthContext } from '../../AuthForm'
 import { useNavigate } from 'react-router-dom'
 import app from '../../base'
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 
 const TopBar = () => {
     //탑바 실시간으로 안바뀌는 문제 해결~~ 
@@ -63,9 +64,11 @@ const TopBar = () => {
             }
             <Button
                 to={"/cart"}
-                component={RouterLink}>
+                component={RouterLink}> 
                 장바구니
-                    </Button>
+            </Button>
+
+            <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
 
             {mode === "manager" && <>
                 <Button
