@@ -1,11 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Link as RouterLink, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import {Toolbar, Button, IconButton,Link, Typography } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import { Toolbar, Button, IconButton, Link, Typography, Tooltip } from '@material-ui/core';
+// import SearchIcon from '@material-ui/icons/Search';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import Person from '@material-ui/icons/Person';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+// import { ShoppingCartOutlinedIcon, PersonOutlineIcon } from '@material-ui/icons';
+
 
 import { AuthContext } from '../../AuthForm'
-import { NavLink as RouterLink } from 'react-router-dom'
 import app from '../../base'
 
 
@@ -77,40 +83,44 @@ export default function Header() {
           {mode === "guest" && <>
             <Button
               to={"/signIn"}
-              component={RouterLink} size="small">
+              component={NavLink} size="small">
               로그인
                 </Button>
-            <Button
-              to={"/signUp"}
-              component={RouterLink}
-               size="small">
-              회원가입
-                </Button>
+
+            <RouterLink to="/signUp">
+              <Tooltip title="회원가입" aria-label="회원가입">
+                <PersonAddIcon color="action"></PersonAddIcon>
+              </Tooltip>
+            </RouterLink>
+
           </>}
 
           {mode != "guest" && <>
-            <Button
-              onClick={signOut} size="small">
-              로그아웃
-                    </Button>
 
-            <Button
-              to={"/myPage"}
-              component={RouterLink} size="small">
-              마이페이지
-                    </Button>
+            <Tooltip title="로그아웃" aria-label="로그아웃">
+              <ExitToAppIcon color="action" onClick={signOut}></ExitToAppIcon>
+            </Tooltip>
+
+            <RouterLink to="/myPage">
+              <Tooltip title="마이페이지" aria-label="마이페이지">
+                <Person color="action"></Person>
+              </Tooltip>
+            </RouterLink>
 
           </>
           }
-          <Button
-            to={"/cart"}
-            component={RouterLink} size="small">
-            장바구니</Button>
+
+          <RouterLink to="/cart">
+            <Tooltip title="장바구니" aria-label="장바구니">
+              <ShoppingCart color="action"></ShoppingCart>
+            </Tooltip>
+          </RouterLink>
+
 
           {mode === "manager" && <>
             <Button
               to={"/admin"}
-              component={RouterLink} size="small">
+              component={NavLink} size="small">
               관리자페이지</Button>
           </>
           }

@@ -9,7 +9,7 @@ const ProductDetail = (props) => {
         <>
             <div>{code}</div>
             <div>{name}</div>
-            <img src={img} width="100px"></img>
+            <img src={img}></img>
         </>
     )
 }
