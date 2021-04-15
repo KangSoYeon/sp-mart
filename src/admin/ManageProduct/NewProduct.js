@@ -40,21 +40,15 @@ const NewProduct = () => {
 
     const uploadImg = async (e) => {
         e.preventDefault();
-        const serverTime = new Date();
-        const imgTitle = String(serverTime.getTime());
-       
-        const storageRef = app.storage().ref();
-        const tempImageRef = storageRef.child(`products/${imgTitle}.jpg`);
+        
         let file = e.target.files[0]
+        console.log(file)
+
+        const image = await resizeFile(file);
+            setSizedImg(image)
 
         try {
-            //resize해서 올리기
-            const image = await resizeFile(file);
-            setSizedImg(image)
-            await tempImageRef.putString(image, 'data_url');
-
-            //확인하기
-            const httpsReference = await tempImageRef.getDownloadURL();
+            
 
             setImgRef(httpsReference);
             setPreview(true);
@@ -69,12 +63,28 @@ const NewProduct = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const serverTime = new Date();
+        const imgTitle = String(serverTime.getTime());
+       
+        const storageRef = app.storage().ref();
+        const tempImageRef = storageRef.child(`products/${imgTitle}.jpg`);
+
         const i = e.target;
         const name = i.name.value;
         const size = i.size.value;
         const originalPrice = i.originalPrice.value;
         const salePrice = i.salePrice.value;
         const info = i.info.value;
+        const img = i.img;
+        console.log(i.img)
+
+        //resize해서 올리기
+            
+        await tempImageRef.putString(image, 'data_url');
+
+        //확인하기
+        const httpsReference = await tempImageRef.getDownloadURL();
         
 
 
@@ -89,7 +99,8 @@ const NewProduct = () => {
                 <TextField id="originalPrice" label="정가" />
                 <TextField id="salePrice" label="판매가" />
                 <img src={sizedImg} width="500"></img>
-                <Input type="file" name="file" id="img" onChange={(e) => { uploadImg(e) }}></Input>
+                <Input type="file" name="file" id="img"></Input>
+                // <Input type="file" name="file" id="img" onChange={(e) => { uploadImg(e) }}></Input>
                 <TextField
                     id="info"
                     label="정보"
