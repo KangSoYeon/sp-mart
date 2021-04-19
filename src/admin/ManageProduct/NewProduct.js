@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, TextField, Input } from '@material-ui/core'
+import { Button, TextField, Input, Grid } from '@material-ui/core'
 import app from '../../base'
 import ProductDetail from '../../shop/pages/ProductDetail'
 import Resizer from "react-image-file-resizer";
@@ -7,27 +7,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const NewProduct = () => {
 
-    const [preview, setPreview] = useState(false)
-    const [imgRef, setImgRef] = useState("")
     const [sizedImg, setSizedImg] = useState("/img/default_img.png")
-
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            '& > *': {
-                margin: theme.spacing(1),
-                width: '25ch',
-            },
-        },
-    }));
-
-    const classes = useStyles();
 
     const resizeFile = (file) =>
         new Promise((resolve) => {
             Resizer.imageFileResizer(
                 file,
-                300,
-                300,
+                500,
+                500,
                 "JPEG",
                 100,
                 0,
@@ -38,80 +25,78 @@ const NewProduct = () => {
             );
         });
 
-    const uploadImg = async (e) => {
+    const resizeImg = async (e) => {
         e.preventDefault();
-        
+
         let file = e.target.files[0]
         console.log(file)
 
         const image = await resizeFile(file);
-            setSizedImg(image)
+        setSizedImg(image)
 
-        try {
-            
-
-            setImgRef(httpsReference);
-            setPreview(true);
-
-            await app.firestore().collection('products').doc(imgTitle).set({
-                img: httpsReference
-            }, { merge: true })
-        } catch (err) {
-            console.log(err);
-        }
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const serverTime = new Date();
-        const imgTitle = String(serverTime.getTime());
-       
-        const storageRef = app.storage().ref();
-        const tempImageRef = storageRef.child(`products/${imgTitle}.jpg`);
+        const pId = String(serverTime.getTime());
 
-        const i = e.target;
-        const name = i.name.value;
-        const size = i.size.value;
-        const originalPrice = i.originalPrice.value;
-        const salePrice = i.salePrice.value;
-        const info = i.info.value;
-        const img = i.img;
-        console.log(i.img)
+        const storageRef = app.storage().ref();
+        const tempImageRef = storageRef.child(`products/${pId}.jpg`);
 
         //resize해서 올리기
-            
-        await tempImageRef.putString(image, 'data_url');
+        await tempImageRef.putString(sizedImg, 'data_url');
 
         //확인하기
-        const httpsReference = await tempImageRef.getDownloadURL();
-        
+        const httpsReference = await tempImageRef.getDownloadURL()
+        const i = e.target;
 
+        const saveData = {
 
+            name: i.name.value,
+            size: i.size.value,
+            originalPrice: i.originalPrice.value,
+            salePrice: i.salePrice.value,
+            info: i.info.value,
+            img: httpsReference,
+        }
+
+        await app.firestore().collection('products').doc(pId).set(saveData, { merge: true })
+
+        alert("등록이 완료되었습니다.")
     }
 
     return (
         <div>
             새상품 추가
-            <form className={classes.root} onSubmit={handleSubmit} noValidate >
-                <TextField id="name" label="상품명" />
-                <TextField id="size" label="사이즈" />
-                <TextField id="originalPrice" label="정가" />
-                <TextField id="salePrice" label="판매가" />
-                <img src={sizedImg} width="500"></img>
-                <Input type="file" name="file" id="img"></Input>
-                // <Input type="file" name="file" id="img" onChange={(e) => { uploadImg(e) }}></Input>
-                <TextField
-                    id="info"
-                    label="정보"
-                    multiline
-                    rows={10}
-                    placeholder="상품 정보를 입력하세요."
-                />
-                <Button type="submit">등록</Button>
+            <form onSubmit={handleSubmit} noValidate >
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={6} >
+                        <TextField id="name" label="상품명" fullWidth />
+                        <TextField id="size" label="사이즈" fullWidth/>
+                        <TextField id="originalPrice" label="정가" fullWidth/>
+                        <TextField id="salePrice" label="판매가" fullWidth/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <img src={sizedImg} width="300"></img>
+                        <Input type="file" name="file" id="img" onChange={(e) => { resizeImg(e) }}></Input>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12}>
+                        <TextField
+                            id="info"
+                            label="정보"
+                            multiline
+                            rows={10}
+                            placeholder="상품 정보를 입력하세요."
+                            fullWidth
+                        />
+                    </Grid>
+                </Grid>
+                <Button type="submit" fullWidth>등록</Button>
             </form>
-         
-            
+
         </div>
     )
 }
