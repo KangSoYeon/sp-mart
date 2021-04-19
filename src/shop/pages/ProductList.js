@@ -1,12 +1,10 @@
 import React from 'react'
 
-const ProductList = () => {
-
-    
+const ProductList = ({ category }) => {
 
     return (
         <>
-            
+            <div>{category}</div>        
         </>
     )
 }

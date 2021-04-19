@@ -62,7 +62,7 @@ export default function Header() {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Toolbar className={classes.toolbar}>
         {/* <Button size="small">Subscribe</Button> */}
         {!!currentUser && currentUser.email}
@@ -141,7 +141,7 @@ export default function Header() {
           </Link>
         ))}
       </Toolbar>
-    </React.Fragment>
+    </>
   );
 }
 
