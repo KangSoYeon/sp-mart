@@ -12,6 +12,8 @@ const NewProduct = () => {
     const [stock, setStock] = useState(true)
     const [category, setCategory] = useState("")
     const [product, setProduct] = useState({})
+    const [categoryList, setCategoryList] = useState([]);
+    const [orderLimit, setOrderLimit] = useState(100);
 
     const resizeFile = (file) =>
         new Promise((resolve) => {
@@ -42,7 +44,6 @@ const NewProduct = () => {
 
     const handleSubmit = async () => {
 
-
         const serverTime = new Date();
         const pId = String(serverTime.getTime());
 
@@ -57,34 +58,77 @@ const NewProduct = () => {
         // const i = e.target;
 
         const saveData = {
-            name: product.name,
-            size: product.size,
-            originalPrice: product.originalPrice,
-            salePrice: product.salePrice,
-            info: product.info,
+            name: localStorage.getItem("newProduct.name"),
+            size: localStorage.getItem("newProduct.size"),
+            originalPrice: Number(localStorage.getItem("newProduct.originalPrice")),
+            salePrice: Number(localStorage.getItem("newProduct.salePrice")),
+            info: localStorage.getItem("newProduct.info"),
             img: httpsReference,
-            category: product.category,
-            show: product.show,
-            stock: product.stock
+            category: category,
+            show: show,
+            stock: stock,
+            orderLimit : orderLimit
         }
         localStorage.clear();
         await app.firestore().collection('products').doc(pId).set(saveData, { merge: true })
 
-        alert("등록이 완료되었습니다.")
+        alert("등록이 완료되었습니다.");
+        
     }
 
     const handleChange = (e) => {
         // const inputId = e.target.id
-        const value = e.target.value
-        localStorage.setItem(e.target.id, value);
-        setProduct({ ...product, inputId: value });
-        console.log({ product })
+        // const value = e.target.value
+        // localStorage.setItem(e.target.id, value);
+        // setProduct({ ...product, inputId: value });
+        // console.log({ product })
+        console.log(e.target.value)
+    }
+
+    const getCategories = async () => {
+        const getFetchedData = await app.firestore().collection('categories').get();
+        let cList = []
+        getFetchedData.forEach((doc) => {
+            const data = doc.data();
+            if (data.isOption) {
+                // cList.push({group : data.name}) //category1
+                const childOfGroup = []
+                data.options.forEach((c) => {
+                    childOfGroup.push(c.name)
+                })
+                cList.push({
+                    group: data.name
+                    , child: childOfGroup
+                })
+            } else {
+                cList.push({ child: data.name })
+            }
+
+        })
+        setCategoryList(o => [...cList])
+
+
     }
 
     useEffect(() => {
-        console.log(JSON.parse(localStorage.getItem("newProduct.name")))
+
+        getCategories();
+
     }, [])
 
+    let categoryListShow = [];
+    categoryList.map((c) => {
+        let categoryChild = []
+        if (c.group !== undefined) {
+            for (let i = 0; i < c.child.length; i++) {
+                categoryChild.push(<option value={c.child[i]}>{c.child[i]}</option>)
+            }
+            categoryListShow.push(<optgroup label={c.group}>{categoryChild}</optgroup>);
+
+        } else {
+            categoryListShow.push(<option value={c.child}>{c.child}</option>)
+        }
+    })
 
     return (
         <div>
@@ -103,26 +147,18 @@ const NewProduct = () => {
                             startAdornment: <InputAdornment position="start">₩</InputAdornment>,
                         }} required fullWidth />
 
-                    <FormControl variant="outlined">
-                        <Grid container>
-                            <Grid item xs={6} sm={6}>
-                                <Select
-                                    native
-                                    value={category}
-                                    onChange={(e) => setCategory(e.target.value)}
-                                    label="Category"
-                                    onChange={handleChange}
-
-                                >
-                                    <option aria-label="None" value="" />
-                                    <option value={10}>Ten</option>
-                                    <option value={20}>Twenty</option>
-                                    <option value={30}>Thirty</option>
-                                </Select>
-                            </Grid>
-                        </Grid>
+                    <FormControl variant="outlined" fullWidth>
+                        <Select
+                            native
+                            value={category}
+                            defaultValue=""
+                            onClick={(e) => setCategory(e.target.value)}
+                            label="Category"
+                            onChange={handleChange}
+                        >
+                            {categoryListShow}
+                        </Select>
                     </FormControl>
-
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <img src={sizedImg} width="200"></img>
@@ -137,6 +173,8 @@ const NewProduct = () => {
                         rows={10}
                         placeholder="상품 정보를 입력하세요."
                         fullWidth
+                        onChange={(e) => localStorage.setItem("newProduct.info", e.target.value)} 
+                        value={localStorage.getItem("newProduct.info")}
                     />
                 </Grid>
 
@@ -149,8 +187,7 @@ const NewProduct = () => {
                         control={<Switch checked={stock} onChange={() => setStock(!stock)} name="stock" />}
                         label="재고 여부"
                     />
-                    <TextField id="orderLimit" label="1회 최대 주문수량" variant="outlined" />
-
+                    <TextField id="orderLimit" label="1회 최대 주문수량" onChange={(e) => setOrderLimit(e.target.value)} variant="outlined" />
 
                 </Grid>
             </Grid>

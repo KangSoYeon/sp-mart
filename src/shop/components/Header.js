@@ -3,6 +3,7 @@ import { Link as RouterLink, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Toolbar, Button, IconButton, Link, Typography, Tooltip } from '@material-ui/core';
+
 // import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import Person from '@material-ui/icons/Person';
@@ -99,6 +100,7 @@ export default function Header() {
 
             <Tooltip title="로그아웃" aria-label="로그아웃">
               <ExitToAppIcon color="action" onClick={signOut}></ExitToAppIcon>
+              {/* <Button onClick={signOut}>로그아웃</Button> */}
             </Tooltip>
 
             <RouterLink to="/myPage">
