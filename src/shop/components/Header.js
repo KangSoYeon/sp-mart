@@ -67,6 +67,7 @@ export default function Header() {
       <Toolbar className={classes.toolbar}>
         {/* <Button size="small">Subscribe</Button> */}
         {!!currentUser && currentUser.email}
+
         <Typography
           component="h2"
           variant="h5"
@@ -74,9 +75,11 @@ export default function Header() {
           align="center"
           noWrap
           className={classes.toolbarTitle}
+          onClick={() => window.location.replace('/')}
         >
           제목
         </Typography>
+
         {/* <IconButton>
           <SearchIcon />
         </IconButton> */}

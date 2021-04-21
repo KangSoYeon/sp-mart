@@ -136,13 +136,13 @@ const NewProduct = () => {
             <Grid container spacing={3}>
 
                 <Grid item xs={12} sm={6}>
-                    <TextField id="name" label="상품명" variant="outlined" onChange={(e) => localStorage.setItem("newProduct.name", e.target.value)} value={localStorage.getItem("newProduct.name")} required fullWidth />
-                    <TextField id="size" label="사이즈" variant="outlined" onChange={(e) => localStorage.setItem("newProduct.size", e.target.value)} value={localStorage.getItem("newProduct.size")} required fullWidth />
-                    <TextField id="originalPrice" label="정가" variant="outlined" type="number" onChange={(e) => localStorage.setItem("newProduct.originalPrice", e.target.value)} value={localStorage.getItem("newProduct.originalPrice")}
+                    <TextField id="name" label="상품명" variant="outlined" onChange={(e) => localStorage.setItem("newProduct.name", e.target.value)} required fullWidth />
+                    <TextField id="size" label="사이즈" variant="outlined" onChange={(e) => localStorage.setItem("newProduct.size", e.target.value)} required fullWidth />
+                    <TextField id="originalPrice" label="정가" variant="outlined" type="number" onChange={(e) => localStorage.setItem("newProduct.originalPrice", e.target.value)}
                         InputProps={{
                             startAdornment: <InputAdornment position="start">₩</InputAdornment>,
                         }} required fullWidth />
-                    <TextField id="salePrice" label="판매가" variant="outlined" type="number" onChange={(e) => localStorage.setItem("newProduct.salePrice", e.target.value)} value={localStorage.getItem("newProduct.salePrice")}
+                    <TextField id="salePrice" label="판매가" variant="outlined" type="number" onChange={(e) => localStorage.setItem("newProduct.salePrice", e.target.value)}
                         InputProps={{
                             startAdornment: <InputAdornment position="start">₩</InputAdornment>,
                         }} required fullWidth />
@@ -187,7 +187,7 @@ const NewProduct = () => {
                         control={<Switch checked={stock} onChange={() => setStock(!stock)} name="stock" />}
                         label="재고 여부"
                     />
-                    <TextField id="orderLimit" label="1회 최대 주문수량" onChange={(e) => setOrderLimit(e.target.value)} variant="outlined" />
+                    <TextField id="orderLimit" label="1회 최대 주문수량" onChange={(e) => setOrderLimit(e.currentTarget.value)} variant="outlined" />
 
                 </Grid>
             </Grid>
