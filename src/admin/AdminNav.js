@@ -22,22 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminTab = ({ items }) => {
-  const classes = useStyles();
   return (
-    // <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-    //   {items.map((section) => (
-    //     <Link
-    //       color="inherit"
-    //       noWrap
-    //       key={section.title}
-    //       variant="body2"
-    //       href={section.url}
-    //       className={classes.toolbarLink}
-    //     >
-    //       {section.title}
-    //     </Link>
-    //   ))}
-    // </Toolbar>
     <Grid>
       {
         items.map((item) => (

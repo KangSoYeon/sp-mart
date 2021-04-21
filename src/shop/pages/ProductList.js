@@ -1,10 +1,10 @@
 import React from 'react'
 
-const ProductList = ({ category }) => {
+const ProductList = ({ match }) => {
 
     return (
         <>
-            <div>{category}</div>        
+            <div>{match.params.listId}</div>        
         </>
     )
 }
