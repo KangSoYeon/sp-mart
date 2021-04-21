@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const ProductList = ({ match }) => {
+const ProductList = (props) => {
+
+    useEffect(() => {
+        console.log({props})
+        //이건 Router로 해야한다아아아앙 NavLink 아니다아아아아
+    }, [])
 
     return (
         <>
-            <div>{match.params.listId}</div>        
+            <div>{props.url}</div>
+            <div>{props.match.url}</div>        
+
         </>
     )
 }
