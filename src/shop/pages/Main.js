@@ -12,7 +12,6 @@ const Main = () => {
             <Header />
             {/* <TopBar /> */}
             <NavBar />
-
             <Outlet />
             <FooterInfo />
             <Footer />

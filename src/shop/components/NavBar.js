@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Button } from '@material-ui/core'
 import { NavLink as RouterLink } from 'react-router-dom'
+
+import { Router } from 'react-router-dom'
 import app from '../../base'
 
 const NavBar = () => {

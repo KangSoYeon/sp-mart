@@ -1,16 +1,36 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
+import app from '../../base'
+import ProductButton from '../components/ProductButton'
 
-const ProductList = (props) => {
+const ProductList = () => {
+
+    const { listId } = useParams()
+    const products = useState([])
+    const fetchingData = async () => {
+        const query = await app.firestore().collection("products").where("category", "array-contains", listId).get();
+        let listTemp = []
+        query.forEach((p) => {
+            listTemp.push(p)
+        })
+        products(o => [...listTemp]);
+    }
 
     useEffect(() => {
-        console.log({props})
-        //이건 Router로 해야한다아아아앙 NavLink 아니다아아아아
+        fetchingData()
+        //어디가 클릭되면 좋을지 생각해보자~ 
     }, [])
 
     return (
         <>
-            <div>{props.url}</div>
-            <div>{props.match.url}</div>        
+            <div>{listId}</div>
+
+            {products.map((p) => {
+                <>
+                    <ProductButton img={p.img} name={p.name} price={p.salePrice}></ProductButton>
+                </>
+            })}
+
 
         </>
     )
