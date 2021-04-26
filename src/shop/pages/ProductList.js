@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import app from '../../base'
 import ProductButton from '../components/ProductButton'
+import { Grid } from "@material-ui/core"
 
 const ProductList = () => {
 
@@ -12,33 +13,25 @@ const ProductList = () => {
         const query = await app.firestore().collection("products").where("category", "array-contains", listId).get();
         let listTemp = []
         query.forEach((p) => {
-            listTemp.push(p.data())
+            listTemp.push({...p.data(), "id" : p.id})
         })
-        console.log(listTemp)
         setProducts(o => [...listTemp]);
     }
 
     useEffect(() => {
         fetchingData()
-        //어디가 클릭되면 좋을지 생각해보자~ 
-    }, [])
+    }, [listId])
 
     let showedList = []
-    showedList = [...products]
-
-
+    products.map((p) => {
+        showedList.push(<ProductButton id={p.id} img={p.img} name={p.name} price={p.salePrice}></ProductButton>)
+    })
+    
     return (
         <>
-            <div>{listId}</div>
-
-            {showedList.map((p, index) => {
-                <>
-                    <div>{p.name}</div>
-                    <ProductButton id={index} img={p.img} name={p.name} price={p.salePrice}></ProductButton>
-                </>
-            })}
-
-
+            <Grid container spacing={2}>
+            {showedList}
+            </Grid>
         </>
     )
 }

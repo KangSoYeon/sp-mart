@@ -1,12 +1,22 @@
 import React from 'react'
+import { Grid } from "@material-ui/core"
+import { useNavigate } from 'react-router-dom';
 
-const ProductButton = ({ name, img, price }) => {
+const ProductButton = ({ id, name, img, price }) => {
+
+    let navigate = useNavigate();
+
+    const clickHandler = () => {
+        //productDetail로 이동 
+        navigate(`/detail/${id}`)
+    }
+
     return (
-        <div>
+        <Grid item xs={6} sm={3} onClick={clickHandler}>
+            <img src={img} width="200px"></img>
             <div>{name}</div>
-            <div>{img}</div>
-            <div></div>
-        </div>
+            <div>{price}</div>
+        </Grid>
     )
 }
 
