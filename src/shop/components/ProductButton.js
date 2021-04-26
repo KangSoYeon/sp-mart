@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProductButton = ({ name, img, price}) => {
+const ProductButton = ({ name, img, price }) => {
     return (
         <div>
             <div>{name}</div>

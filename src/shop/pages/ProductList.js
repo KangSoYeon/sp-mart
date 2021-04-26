@@ -6,14 +6,16 @@ import ProductButton from '../components/ProductButton'
 const ProductList = () => {
 
     const { listId } = useParams()
-    const products = useState([])
+    const [products, setProducts] = useState([])
+
     const fetchingData = async () => {
         const query = await app.firestore().collection("products").where("category", "array-contains", listId).get();
         let listTemp = []
         query.forEach((p) => {
-            listTemp.push(p)
+            listTemp.push(p.data())
         })
-        products(o => [...listTemp]);
+        console.log(listTemp)
+        setProducts(o => [...listTemp]);
     }
 
     useEffect(() => {
@@ -21,13 +23,18 @@ const ProductList = () => {
         //어디가 클릭되면 좋을지 생각해보자~ 
     }, [])
 
+    let showedList = []
+    showedList = [...products]
+
+
     return (
         <>
             <div>{listId}</div>
 
-            {products.map((p) => {
+            {showedList.map((p, index) => {
                 <>
-                    <ProductButton img={p.img} name={p.name} price={p.salePrice}></ProductButton>
+                    <div>{p.name}</div>
+                    <ProductButton id={index} img={p.img} name={p.name} price={p.salePrice}></ProductButton>
                 </>
             })}
 
