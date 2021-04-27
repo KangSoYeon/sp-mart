@@ -1,8 +1,16 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    // A read rule can be divided into get and list rules
+    match /products/{product} {
+      allow read: if true;
+      allow write, update, delete, create: if request.auth != null && request.auth.uid == "DQiJpcEMv7MM5HyL9BfNl8SL8FX2";
+    }
+
+    // A write rule can be divided into create, update, and delete rules
+    match /categories/{category} {
+      allow read: if true;
+      allow write, update, delete, create: if request.auth != null && request.auth.uid == "DQiJpcEMv7MM5HyL9BfNl8SL8FX2";
     }
   }
 }

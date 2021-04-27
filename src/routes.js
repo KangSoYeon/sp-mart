@@ -11,9 +11,11 @@ import EditMain from './admin/ManageProduct/EditMain'
 import NewProduct from './admin/ManageProduct/NewProduct'
 import EditProduct from './admin/ManageProduct/EditProduct'
 
+
 import Main from './shop/pages/Main';
 import ProductDetail from './shop/pages/ProductDetail';
 import ProductList from './shop/pages/ProductList';
+import MainTitle from './shop/pages/MainTitle'
 import SignIn from './shop/pages/SignIn'
 import SignUp from './shop/pages/SignUp'
 import Cart from './shop/pages/Cart'
@@ -43,6 +45,7 @@ const routes = [{
     children: [
       { path: '/detail/:productId', element: <ProductDetail /> },
       { path: '/list/:listId', element: <ProductList /> },
+      { path: '/', element: <MainTitle/>},
       { path: '/signIn', element: <SignIn /> },
       { path: '/signUp', element: <SignUp /> },
       { path: '/cart', element: <Cart /> },
