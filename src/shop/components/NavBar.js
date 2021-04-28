@@ -28,8 +28,6 @@ const NavBar = () => {
     const [subCategory, setSubCategory] = useState([]);
     const classes = useStyles();
 
-
-
     const fetchingData = async () => {
         const categorySnapshot = await app.firestore().collection("categories").get();
         const temp = []
