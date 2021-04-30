@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Button, TextField, Input, Grid, FormControlLabel, Switch, FormControl, InputLabel, Select, InputAdornment } from '@material-ui/core'
 import Resizer from "react-image-file-resizer";
 
+
 const NewProduct2 = () => {
     const [sizedImg, setSizedImg] = useState("/img/default_img.png")
-
 
     const resizeFile = (file) =>
         new Promise((resolve) => {
@@ -32,13 +32,15 @@ const NewProduct2 = () => {
         setSizedImg(image)
 
     }
+    // https://www.daleseo.com/react-forms-with-hooks/
     return (
         <>
             새상품 추가
-            <form noValidate autoComplete="off">
+            <form onSubmit={} noValidate autoComplete="off">
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
-                        <TextField id="name" label="상품명" variant="outlined" required fullWidth />
+                        <TextField id="name" label="상품명" variant="outlined" required fullWidth
+                        {...register("exampleRequired", { required: true })} />
                         <TextField id="size" label="사이즈" variant="outlined" required fullWidth />
                         <TextField id="originalPrice" label="정가" variant="outlined" type="number"
                             InputProps={{
