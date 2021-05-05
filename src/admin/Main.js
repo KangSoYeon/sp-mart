@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import AdminNav from './AdminNav'
-import { Typography } from "@material-ui/core"
+import { Typography, Container } from "@material-ui/core"
 import { Outlet } from 'react-router-dom'
 import Header from '../shop/components/Header'
 import { AuthContext } from '../AuthForm'
@@ -40,7 +40,8 @@ const Admin = () => {
     ];
 
     return (
-        <>
+        <Container fixed>
+
             <Header />
             <Typography
                 color="textPrimary"
@@ -49,7 +50,7 @@ const Admin = () => {
             </Typography>
             <AdminNav items={items}></AdminNav>
             <Outlet />
-        </>
+        </Container>
     )
 }
 

@@ -66,9 +66,7 @@ const NavBar = () => {
 
     let category1 = []
     categories.map((c) => {
-
         category1.push(<Button className={classes.toolbarLink} id={c.id} to={`/list/${c.id}`} component={RouterLink} value={c.name} onClick={(e) => handleClick(e)}>{c.name}</Button>)
-
     })
 
     let category2 = []
@@ -82,9 +80,10 @@ const NavBar = () => {
                 {category1}
             </Toolbar>
             <br />
-            <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
+            {category2.length !== 0 && <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
                 {category2}
-            </Toolbar>
+            </Toolbar>}
+            
         </>
     )
 }

@@ -77,7 +77,7 @@ export default function Header() {
           className={classes.toolbarTitle}
           onClick={() => window.location.replace('/')}
         >
-          제목
+          상패마트
         </Typography>
 
         {/* <IconButton>
@@ -121,7 +121,6 @@ export default function Header() {
             </Tooltip>
           </RouterLink>
 
-
           {mode === "manager" && <>
             <Button
               to={"/admin"}
@@ -130,21 +129,6 @@ export default function Header() {
           </>
           }
         </>
-
-      </Toolbar>
-      <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-        {sections.map((section) => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            className={classes.toolbarLink}
-          >
-            {section.title}
-          </Link>
-        ))}
       </Toolbar>
     </>
   );
