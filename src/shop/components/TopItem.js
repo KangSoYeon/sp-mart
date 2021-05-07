@@ -9,35 +9,23 @@ const TopItem = ({ id, name, img, price }) => {
         navigate(`/detail/${id}`);
     }
 
-    const useStyles = makeStyles((theme) => ({
-        container: {
-            img: {
-                opacity: 1,
-                display: "block",
-                width: 100,
-                height: "auto",
-                backface: "hidden",
-                '&:hover': {
-                    opacity: 0.3
-                }
-            },
-            info: {
-                '&:hover': {
-                    opacity: 1
-                }
-            }
-        }
-    }))
-
-    const classes = useStyles();
     return (
         <>
-            <Grid item xs={6} sm={3} onClick={clickHandler}>
-                <container>
+            <Grid item xs={3} sm={3} onClick={clickHandler}>
+                <div class="grid">
+                    <figure className="effect-lily">
+                        <img src={img} alt={img} />
+                        <figcaption>
+                            <h2>{name}</h2>
+                            <span>{price}</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </Grid>
+            {/* <container>
                     <img className={classes.img} src={img} width="200px"></img>
                     <info>{name} : {price}</info>
-                </container>
-            </Grid>
+                </container> */}
         </>
     )
 }

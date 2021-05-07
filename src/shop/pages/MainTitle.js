@@ -27,7 +27,7 @@ const MainTitle = () => {
     })
 
     const useStyles = makeStyles((theme) => ({
-        
+
     }));
 
     const images = [
@@ -48,7 +48,7 @@ const MainTitle = () => {
             </div>
 
             <Typography variant="h3" component="h3" gutterBottom>Top Rate</Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={3}>
                 {showedList}
             </Grid>
         </>

@@ -14,6 +14,7 @@ const Main = () => {
                 <NavBar />
                 <Outlet />
             </Container>
+            <br/><br/><br/><br/><br/><br/><br/><br/>
             <Footer />
         </>
     )
