@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from 'react';
 
-const useForm = ({ initialValues, onSubmit, validate }) => {
+function useForm({ initialValues, onSubmit, validate }) {
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
 
-    const handleChange = (e) => {
-        const { id, value } = e.currentTarget;
-        console.log(id, value)
-        setValues({ ...values, id : value });
+    const handleChange = (event) => {
+        const { name, value, checked } = event.currentTarget;
+        //checked 변수 처리하기 
+        if (value) {
+            setValues({ ...values, [name]: !!checked });
+
+        } else {
+            setValues({ ...values, [name]: value });
+
+        }
+        console.log(values)
     }
 
     const handleSubmit = async (e) => {
         setSubmitting(true);
-        e.prevenetDefault();
-        //서버에 저장
+        e.preventDefault();
         setErrors(validate(values));
     }
 
@@ -27,13 +33,13 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
         }
     }, [errors])
 
-    return (
+    return {
         values,
         errors,
         submitting,
         handleChange,
         handleSubmit
-    )
+    }
 }
 
 export default useForm
