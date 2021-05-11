@@ -9,6 +9,9 @@ const TopItem = ({ id, name, img, price }) => {
         navigate(`/detail/${id}`);
     }
 
+    //https://material-ui.com/components/buttons/#button
+    //위 링크 디자인으로 바꾸기 
+
     return (
         <>
             <Grid item xs={3} sm={3} onClick={clickHandler}>

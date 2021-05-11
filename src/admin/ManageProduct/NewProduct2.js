@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { Button, TextField, Input, Grid, FormControlLabel, Switch, FormControl, InputLabel, Select, InputAdornment } from '@material-ui/core'
-import Resizer from "react-image-file-resizer";
 import useForm from './useForm';
 import validate from './validate';
 import app from "../../base"
 
 const NewProduct2 = () => {
-    const [sizedImg, setSizedImg] = useState("/img/default_img.png")
 
-    Date.prototype.yyyymmddhhmmss = function () {
-        return this.yyyymmdd() + this.hhmmss();
-    };
+    const [categories, setCategories] = useState([])
 
     const fetchingCategory = async () => {
         //카테고리 넣기 
-        await app.firestore().collection("categories").get();
+        const fetchList = await app.firestore().collection("categories").get();
+        let listC = []
+        fetchList.forEach(p => {
+            listC.push({ ...p.data(), "id": p.id });
+        })
+        setCategories(o => [...listC]);
     }
 
     useEffect(() => {
@@ -22,47 +23,45 @@ const NewProduct2 = () => {
     }, [])
 
     const { values, errors, submitting, handleChange, handleSubmit } = useForm({
-        initialValues: { name: "", size: "", originalPrice: 0, salePrice: 0, category: "", img: "", info: "", show: true, stock: true, top: true},
+        initialValues: {
+            name: "", size: "", originalPrice: 0, salePrice: 0, category: "",
+            img: "", info: "", orderLimit: 99, show: true, stock: true, top: true
+        },
         onSubmit: async (values) => {
-            // alert(JSON.stringify(values, null, 2))
-            //서버에 저장
-            //현재시간 가져오기
-            const time = new Date();
-            const docID = time.yyyymmddhhmmss();
+            const date = new Date();
+
+            //how to import TimeForm globally.
+            // const docID = date.
+
+            const docID = date.now();
             console.log(docID)
-            await app.firestore().collection("products").doc(docID).set(values);
+            try {
+                
+                //이미지 올리기
+                const storageRef = app.storage().ref();
+                const tempImageRef = storageRef.child(`products/${docID}.jpg`);
+                await tempImageRef.putString(values.img, 'data_url');
+                const httpsReference = await tempImageRef.getDownloadURL();
+
+                //DB에 저장 
+                await app.firestore().collection("products").doc(docID).set({...values, "img": httpsReference});
+
+            } catch (error) {
+                alert('상품 등록이 실패했습니다.')
+                console.log(error);
+            }
+            alert("성공적으로 상품이 등록되었습니다.")
+            // window.location.replace("/admin/product/newProduct");
         },
         validate,
     })
 
-
-    const resizeFile = (file) =>
-        new Promise((resolve) => {
-            Resizer.imageFileResizer(
-                file,
-                500,
-                500,
-                "JPEG",
-                100,
-                0,
-                (uri) => {
-                    resolve(uri);
-                },
-                "base64"
-            );
-        });
-
-    const resizeImg = async (e) => {
-        e.preventDefault();
-
-        let file = e.target.files[0]
-        console.log(file)
-
-        const image = await resizeFile(file);
-        setSizedImg(image)
-
-    }
     // https://www.daleseo.com/react-forms-with-hooks/
+
+    let showedCategories = [<option key={"default"} value={"default"}>{"카테고리를 선택하세요."}</option>]
+    categories.map((c) => {
+        showedCategories.push(<option key={c.id} value={c.id}>{c.name}</option>)
+    })
 
     return (
         <>
@@ -70,100 +69,81 @@ const NewProduct2 = () => {
             <form onSubmit={handleSubmit} noValidate autoComplete="off">
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
-                        <TextField id="name" label="상품명" variant="outlined" onChange={handleChange} required fullWidth />
-                        {errors.name && <span className="errorMessage">{errors.name}</span>}
-                        <TextField id="size" label="사이즈" variant="outlined" onChange={handleChange} required fullWidth />
-                        {errors.name && <span className="errorMessage">{errors.name}</span>}
-
-                        <TextField id="originalPrice" label="정가" variant="outlined" type="number"
-                            onChange={handleChange}
+                        <TextField id="name" name="name" label="상품명" variant="outlined" 
+                            onChange={handleChange} helperText={errors.name} required fullWidth autoComplete />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField id="size" name="size" label="사이즈" variant="outlined"
+                            onChange={handleChange} helperText={errors.size} required fullWidth />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField id="originalPrice" name="originalPrice" label="정가" variant="outlined" type="number"
+                            onChange={handleChange} helperText={errors.originalPrice}
                             InputProps={{
                                 startAdornment: <InputAdornment position="start">₩</InputAdornment>,
                             }} required fullWidth />
-                        {errors.originalPrice && <span className="errorMessage">{errors.originalPrice}</span>}
-
-                        <TextField id="salePrice" label="판매가" type="number" variant="outlined"
-                            onChange={handleChange}
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField id="salePrice" name="salePrice" label="판매가" type="number" variant="outlined"
+                            onChange={handleChange} helperText={errors.salePrice}
                             InputProps={{
                                 startAdornment: <InputAdornment position="start">₩</InputAdornment>,
                             }} required fullWidth />
-                        {errors.salePrice && <span className="errorMessage">{errors.salePrice}</span>}
-
-                        <TextField
-                            id="category"
-                            select
-                            label="카테고리"
-                            onChange={handleChange}
-                            SelectProps={{
-                                native: true,
-                            }}
-                            helperText="Please select your currency"
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField id="category" name="category" label="카테고리"
+                            onChange={handleChange} helperText={errors.category}
+                            SelectProps={{ native: true, }} select
                         >
-                            {/* {currencies.map((option) => (
-                            <option key={option.value} value={option.value}>
-                            {option.label}
-                            </option>
-                        ))} */}
+                            {showedCategories}
                         </TextField>
-                        {errors.category && <span className="errorMessage">{errors.category}</span>}
-
-                        <Input type="file" id="img" name="file" id="img" onChange={handleChange}></Input>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Input type="file" id="img" name="img" onChange={handleChange}></Input>
                         {errors.img && <span className="errorMessage">{errors.img}</span>}
-
-                        {/* onChange={(e) => { resizeImg(e) }} */}
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                         <TextField
-                            id="info"
-                            label="정보"
-                            multiline
-                            onChange={handleChange}
-                            rows={10}
-                            placeholder="상품 정보를 입력하세요."
-                            fullWidth
-                            variant="outlined"
-
+                            id="info" name="info" label="정보"
+                            multiline rows={1} fullWidth
+                            onChange={handleChange} placeholder="상품 정보를 입력하세요."
+                            variant="outlined" helperText={errors.info}
                         />
-                        {errors.info && <span className="errorMessage">{errors.info}</span>}
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    defaultChecked onChange={handleChange}
+                                    name="show" color="primary"
+                                />
+                            } label="노출 여부"
+                        />
 
                         <FormControlLabel
                             control={
                                 <Switch
-                                    // checked={state.checkedB}
-                                    onChange={handleChange}
-                                    name="show"
-                                    color="primary"
+                                    defaultChecked onChange={handleChange}
+                                    name="stock" color="primary"
                                 />
-                            }
-                            label="노출 여부"
-                        />
-
-
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    // checked={state.checkedB}
-                                    onChange={handleChange}
-                                    name="stock"
-                                    color="primary"
-                                />
-                            }
-                            label="재고 여부"
+                            } label="재고 여부"
                         />
                         <FormControlLabel
                             control={
                                 <Switch
-                                    // checked={state.checkedB}
-                                    onChange={handleChange}
-                                    name="top"
-                                    color="primary"
+                                    defaultChecked onChange={handleChange}
+                                    name="top" color="primary"
                                 />
-                            }
-                            label="메인 노출 여부"
+                            } label="메인 노출 여부"
                         />
-                        <TextField id="orderLimit" label="1회 최대 주문수량" variant="outlined"></TextField>
-                        입력하지 않으면 자동값 99게로 입력됩니다.
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField id="orderLimit" name="orderLimit" label="1회 최대 주문수량"
+                            variant="outlined" defaultValue={99} onChange={handleChange}
+                            helperText={"입력하지 않으면 자동값 99개로 입력됩니다."}></TextField>
                     </Grid>
                 </Grid>
-                <Button type="submit" disabled={submitting}>등록</Button>
+                <Button variant="outlined" type="submit" disabled={submitting}>등록</Button>
             </form>
 
         </>

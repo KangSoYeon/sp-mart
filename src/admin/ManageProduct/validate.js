@@ -1,6 +1,5 @@
 export default function validate({ name, size, originalPrice, salePrice, category,
  img, info}) {
-    // let errors = {"name": "", "size": "", "originalPrice": "", "salePrice":"", "category": "", "img": "", "info": ""};
     let errors = {}
     if(!name) {
         errors.name = "상품명이 입력되지 않았습니다.";
@@ -19,6 +18,8 @@ export default function validate({ name, size, originalPrice, salePrice, categor
     }
 
     if(!category) {
+        errors.category = "상품 카테고리가 선택되지 않았습니다.";
+    } else if (category === "default") {
         errors.category = "상품 카테고리가 선택되지 않았습니다.";
     }
 
