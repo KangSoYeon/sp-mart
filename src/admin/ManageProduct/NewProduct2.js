@@ -24,8 +24,8 @@ const NewProduct2 = () => {
 
     const { values, errors, submitting, handleChange, handleSubmit } = useForm({
         initialValues: {
-            name: "", size: "", originalPrice: 0, salePrice: 0, category: "",
-            img: "", info: "", orderLimit: 99, show: true, stock: true, top: true
+            name: "", size: [], originalPrice: 0, salePrice: 0, category: [], color: [],
+            img: "", info: "", orderLimit: 99, index: 0, show: true, stock: true, top: true
         },
         onSubmit: async (values) => {
             const date = new Date();
@@ -33,8 +33,7 @@ const NewProduct2 = () => {
             //how to import TimeForm globally.
             // const docID = date.
 
-            const docID = date.now();
-            console.log(docID)
+            const docID = String(date.getTime());
             try {
                 
                 //이미지 올리기
@@ -72,9 +71,10 @@ const NewProduct2 = () => {
                         <TextField id="name" name="name" label="상품명" variant="outlined" 
                             onChange={handleChange} helperText={errors.name} required fullWidth autoComplete />
                     </Grid>
+
                     <Grid item xs={12} sm={6}>
                         <TextField id="size" name="size" label="사이즈" variant="outlined"
-                            onChange={handleChange} helperText={errors.size} required fullWidth />
+                            onChange={handleChange} helperText={"옵션간의 구분은 , 로 기입합니다. ex) [대] 21*26cm,[중] 17.5*22cm"} required fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField id="originalPrice" name="originalPrice" label="정가" variant="outlined" type="number"
@@ -90,6 +90,11 @@ const NewProduct2 = () => {
                                 startAdornment: <InputAdornment position="start">₩</InputAdornment>,
                             }} required fullWidth />
                     </Grid>
+                    
+                    <Grid item xs={12} sm={6}>
+                        <Input type="file" id="img" name="img" onChange={handleChange}></Input>
+                        {errors.img && <span className="errorMessage">{errors.img}</span>}
+                    </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField id="category" name="category" label="카테고리"
                             onChange={handleChange} helperText={errors.category}
@@ -99,9 +104,14 @@ const NewProduct2 = () => {
                         </TextField>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Input type="file" id="img" name="img" onChange={handleChange}></Input>
-                        {errors.img && <span className="errorMessage">{errors.img}</span>}
+                        <TextField id="index" name="index" label="노출 우선 순서" defaultValue={0} variant="outlined"
+                            onChange={handleChange} helperText={"입력하지 않으면 자동값 0개로 입력됩니다."} fullWidth />
                     </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField id="color" name="color" label="상품 색상" variant="outlined"
+                            onChange={handleChange} helperText={"간의 구분은 , 로 기입합니다. ex) 옐로우,블랙,블루"} fullWidth />
+                    </Grid>
+                    
                     <Grid item xs={12} sm={6}>
                         <TextField
                             id="info" name="info" label="정보"

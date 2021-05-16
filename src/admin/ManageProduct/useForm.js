@@ -29,9 +29,17 @@ function useForm({ initialValues, onSubmit, validate }) {
             const file = event.currentTarget.files[0];
             const image = await resizeFile(file);
             setValues({ ...values, [name]: image });
-        } else if (["show", "stock", "top"].indexOf(name) >= 0) {
+        } else if (["size", "color"].includes(name)) {
+            const optionArr = value.split(",");
+            setValues({ ...values, [name]: optionArr });
+        } else if (name === "category") {
+            const categoryArr = [value];
+            setValues({ ...values, [name]: categoryArr });
+        } else if (["show", "stock", "top"].includes(name)) {
             const { checked } = event.currentTarget;
             setValues({ ...values, [name]: checked });
+        } else if (["salePrice", "originalPrice"].includes(name)) {
+            setValues({ ...values, [name]: Number(value)});
         } else {
             setValues({ ...values, [name]: value });
         }
