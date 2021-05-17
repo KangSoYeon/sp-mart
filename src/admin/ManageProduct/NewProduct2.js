@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Button, TextField, Input, Grid, FormControlLabel, Switch, FormControl, InputLabel, Select, InputAdornment } from '@material-ui/core'
 import useForm from './useForm';
 import validate from './validate';
+import AddOption from './AddOption';
 import app from "../../base"
 
 const NewProduct2 = () => {
@@ -90,7 +91,7 @@ const NewProduct2 = () => {
                                 startAdornment: <InputAdornment position="start">₩</InputAdornment>,
                             }} required fullWidth />
                     </Grid>
-                    
+                    <AddOption></AddOption>
                     <Grid item xs={12} sm={6}>
                         <Input type="file" id="img" name="img" onChange={handleChange}></Input>
                         {errors.img && <span className="errorMessage">{errors.img}</span>}
