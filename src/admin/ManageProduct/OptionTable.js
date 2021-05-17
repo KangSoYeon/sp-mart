@@ -1,35 +1,46 @@
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
-import React from 'react'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Switch, TextField, Box } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
 
-const OptionTable = ({ title, list }) => {
+const OptionTable = ({ title, sub }) => {
+    const [rows, setRows] = useState([])
+
+    useEffect(() => {
+        const arr = sub.split(",")
+        setRows(o => [...arr])
+    }, [])
     return (
         <>
+
             <TableContainer>
-                <Table aria-label={title}>
+                <Table aria-label={title} size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Dessert (100g serving)</TableCell>
-                            <TableCell align="right">Calories</TableCell>
-                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                            <TableCell>항목 </TableCell>
+                            <TableCell align="right">추가금액</TableCell>
+                            <TableCell align="right">재고수량</TableCell>
+                            <TableCell align="right">사용여부</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map((row) => (
                             <TableRow key={row.name}>
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {row}
                                 </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
+                                <TableCell align="right"><TextField id="title" label="옵션" variant="outlined" size="small" fullWidth /></TableCell>
+                                <TableCell align="right"><TextField id="title" label="옵션" variant="outlined" size="small" fullWidth /></TableCell>
+                                <TableCell align="right"><Switch
+                                    // checked={state.checkedA}
+                                    // onChange={handleChange}
+                                    name="checkedA"
+                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                /></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Box m={3} />
         </>
     )
 }

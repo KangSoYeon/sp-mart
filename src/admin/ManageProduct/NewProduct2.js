@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, TextField, Input, Grid, FormControlLabel, Switch, FormControl, InputLabel, Select, InputAdornment } from '@material-ui/core'
+import { Button, TextField, Input, Grid, FormControlLabel, Switch, Box, InputAdornment } from '@material-ui/core'
 import useForm from './useForm';
 import validate from './validate';
 import AddOption from './AddOption';
@@ -25,7 +25,7 @@ const NewProduct2 = () => {
 
     const { values, errors, submitting, handleChange, handleSubmit } = useForm({
         initialValues: {
-            name: "", size: [], originalPrice: 0, salePrice: 0, category: [], color: [],
+            name: "",  originalPrice: 0, salePrice: 0, category: [], color: [],
             img: "", info: "", orderLimit: 99, index: 0, show: true, stock: true, top: true
         },
         onSubmit: async (values) => {
@@ -72,10 +72,9 @@ const NewProduct2 = () => {
                         <TextField id="name" name="name" label="상품명" variant="outlined" 
                             onChange={handleChange} helperText={errors.name} required fullWidth autoComplete />
                     </Grid>
-
                     <Grid item xs={12} sm={6}>
-                        <TextField id="size" name="size" label="사이즈" variant="outlined"
-                            onChange={handleChange} helperText={"옵션간의 구분은 , 로 기입합니다. ex) [대] 21*26cm,[중] 17.5*22cm"} required fullWidth />
+                        <Input type="file" id="img" name="img" onChange={handleChange}></Input>
+                        {errors.img && <span className="errorMessage">{errors.img}</span>}
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField id="originalPrice" name="originalPrice" label="정가" variant="outlined" type="number"
@@ -91,11 +90,9 @@ const NewProduct2 = () => {
                                 startAdornment: <InputAdornment position="start">₩</InputAdornment>,
                             }} required fullWidth />
                     </Grid>
-                    <AddOption></AddOption>
-                    <Grid item xs={12} sm={6}>
-                        <Input type="file" id="img" name="img" onChange={handleChange}></Input>
-                        {errors.img && <span className="errorMessage">{errors.img}</span>}
-                    </Grid>
+                    <Box m={3}/>
+                    <AddOption/>
+                    <Box m={3}/>
                     <Grid item xs={12} sm={6}>
                         <TextField id="category" name="category" label="카테고리"
                             onChange={handleChange} helperText={errors.category}

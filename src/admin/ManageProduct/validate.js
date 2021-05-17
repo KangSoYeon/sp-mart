@@ -1,12 +1,8 @@
-export default function validate({ name, size, originalPrice, salePrice, category,
+export default function validate({ name, originalPrice, salePrice, category,
  img, info}) {
     let errors = {}
     if(!name) {
         errors.name = "상품명이 입력되지 않았습니다.";
-    } 
-
-    if(!size) {
-        errors.size = "사이즈가 입력되지 않았습니다.";
     } 
 
     if(!originalPrice) {
