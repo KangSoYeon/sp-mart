@@ -1,5 +1,6 @@
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Switch, TextField, Box } from '@material-ui/core'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Switch, TextField, Box, Button } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
+
 
 const OptionTable = ({ title, sub }) => {
     const [rows, setRows] = useState([])
@@ -8,9 +9,12 @@ const OptionTable = ({ title, sub }) => {
         const arr = sub.split(",")
         setRows(o => [...arr])
     }, [])
+
+    const addOption = () => {
+
+    }
     return (
         <>
-
             <TableContainer>
                 <Table aria-label={title} size="small">
                     <TableHead>
@@ -40,6 +44,7 @@ const OptionTable = ({ title, sub }) => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Button variant="outlined" onClick={addOption}>추가</Button>
             <Box m={3} />
         </>
     )

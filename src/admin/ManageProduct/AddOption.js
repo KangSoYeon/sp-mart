@@ -10,7 +10,6 @@ const AddOption = () => {
     const [addedOption, setAddedOption] = useState([])
     const addOption = () => {
         if(title==="" || sub==="") {
-            
         } else {
             setAddedOption(o => [...addedOption, <OptionTable title={title} sub={sub}></OptionTable>])
             setTitle("")
@@ -33,7 +32,6 @@ const AddOption = () => {
             <Grid item xs={1}>
                 <Button variant="outlined" onClick={addOption}>추가</Button>
             </Grid>
-            {/* <Grid item xs={12}><Button variant="outlined" size="small" fullWidth>+ 옵션 추가</Button></Grid> */}
             {addedOption}
         </>
     )
