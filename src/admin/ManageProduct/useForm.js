@@ -43,7 +43,10 @@ function useForm({ initialValues, onSubmit, validate }) {
         } else {
             setValues({ ...values, [name]: value });
         }
-        console.log(values)
+    }
+
+    const handleOptions = async ( option ) => {
+        setValues({...values, })
     }
 
     const handleSubmit = async (e) => {
@@ -66,7 +69,8 @@ function useForm({ initialValues, onSubmit, validate }) {
         errors,
         submitting,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        handleOptions
     }
 }
 

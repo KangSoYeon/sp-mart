@@ -23,7 +23,7 @@ const NewProduct2 = () => {
         fetchingCategory();
     }, [])
 
-    const { values, errors, submitting, handleChange, handleSubmit } = useForm({
+    const { values, errors, submitting, handleChange, handleSubmit, handleOptions } = useForm({
         initialValues: {
             name: "",  originalPrice: 0, salePrice: 0, category: [], color: [],
             img: "", info: "", orderLimit: 99, index: 0, show: true, stock: true, top: true
@@ -91,8 +91,9 @@ const NewProduct2 = () => {
                             }} required fullWidth />
                     </Grid>
                     <Box m={3}/>
-                    <AddOption/>
+                    <AddOption handleOptions={handleOptions}/>
                     <Box m={3}/>
+                    
                     <Grid item xs={12} sm={6}>
                         <TextField id="category" name="category" label="카테고리"
                             onChange={handleChange} helperText={errors.category}
