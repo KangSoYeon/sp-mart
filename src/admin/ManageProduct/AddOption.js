@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Input, Grid, Typography, Box } from '@material-ui/core';
 import app from '../../base';
-import OptionTable from './OptionTable';
+import OptionTableList from './OptionTableList';
 
 const AddOption = ({ handleOptions }) => {
 
     const [title, setTitle] = useState("");
     const [sub, setSub] = useState("");
     const [addedOption, setAddedOption] = useState([])
+
+    const onRemoveItem = async (deleteTitle) => {
+        console.log(addedOption);
+        setAddedOption(addedOption.filter(o => o.title !== deleteTitle))
+    }
+
     const addOption = () => {
         if(title==="" || sub==="") {
         } else {
-            setAddedOption(o => [...addedOption, <OptionTable title={title} sub={sub} handleOptions={handleOptions}></OptionTable>])
+            setAddedOption(addedOption.concat({"title": title, "sub": sub}));
+            console.log(addedOption)
             setTitle("")
             setSub("")
         }
@@ -33,7 +40,8 @@ const AddOption = ({ handleOptions }) => {
             <Grid item xs={1}>
                 <Button variant="outlined" onClick={addOption}>추가</Button>
             </Grid>
-            {addedOption}
+            
+            <OptionTableList addedOption={addedOption} handleOptions={handleOptions} onRemoveItem={onRemoveItem}/>
         </>
     )
 }
