@@ -18,12 +18,10 @@ const AddOption = ({ handleOptions }) => {
         if(title==="" || sub==="") {
         } else {
             setAddedOption(addedOption.concat({"title": title, "sub": sub}));
-            console.log(addedOption)
             setTitle("")
             setSub("")
         }
     }
-    // 추가 누를때마다 onChange써서 json만들기.
 
     return (
         <>

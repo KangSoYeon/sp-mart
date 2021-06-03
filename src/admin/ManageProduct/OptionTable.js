@@ -28,11 +28,11 @@ const OptionTable = ({ title, sub, handleOptions, onRemoveItem }) => {
         }
     }
 
-    const saveOption = (input) => {
+    const saveOption = () => {
         //ui적인 변화
         //table사라지고
         setSaved(true);
-        handleOptions(input)
+        handleOptions(title, option.current)
     }
 
     const onRemoveItemList = (n) => {
@@ -107,7 +107,7 @@ const OptionTable = ({ title, sub, handleOptions, onRemoveItem }) => {
                             ))}
                         </TableBody>
                     </Table>
-                    <Button variant="outlined" onClick={() => saveOption(option.current)}>추가</Button>
+                    <Button variant="outlined" onClick={() => saveOption()}>추가</Button>
                     <Button variant="outlined" onClick={() => onRemoveItem(title)}>삭제</Button>
                 </TableContainer>
                 <Box m={3} />

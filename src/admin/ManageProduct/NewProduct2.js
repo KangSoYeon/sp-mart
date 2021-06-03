@@ -25,7 +25,7 @@ const NewProduct2 = () => {
 
     const { values, errors, submitting, handleChange, handleSubmit, handleOptions } = useForm({
         initialValues: {
-            name: "",  originalPrice: 0, salePrice: 0, category: [], color: [],
+            name: "",  originalPrice: 0, salePrice: 0, category: [], 
             img: "", info: "", orderLimit: 99, index: 0, show: true, stock: true, top: true
         },
         onSubmit: async (values) => {
@@ -104,13 +104,8 @@ const NewProduct2 = () => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField id="index" name="index" label="노출 우선 순서" defaultValue={0} variant="outlined"
-                            onChange={handleChange} helperText={"입력하지 않으면 자동값 0개로 입력됩니다."} fullWidth />
+                            onChange={handleChange} helperText={"입력하지 않으면 자동값 0으로 입력됩니다."} fullWidth />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField id="color" name="color" label="상품 색상" variant="outlined"
-                            onChange={handleChange} helperText={"간의 구분은 , 로 기입합니다. ex) 옐로우,블랙,블루"} fullWidth />
-                    </Grid>
-                    
                     <Grid item xs={12} sm={6}>
                         <TextField
                             id="info" name="info" label="정보"

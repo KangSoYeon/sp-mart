@@ -73,7 +73,7 @@ const NewProduct = () => {
         await app.firestore().collection('products').doc(pId).set(saveData, { merge: true })
 
         alert("등록이 완료되었습니다.");
-        
+        //새로고침 하번 하기 
     }
 
     const handleChange = (e) => {

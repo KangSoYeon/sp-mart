@@ -45,8 +45,9 @@ function useForm({ initialValues, onSubmit, validate }) {
         }
     }
 
-    const handleOptions = async ( option ) => {
-        setValues({...values, option});
+    const handleOptions = async ( title, input ) => {
+        console.log("option:", input);
+        setValues({...values, ...input});
     }
 
     const handleSubmit = async (e) => {
