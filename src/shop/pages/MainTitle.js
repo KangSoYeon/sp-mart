@@ -21,15 +21,6 @@ const MainTitle = () => {
         fetchingData();
     }, [])
 
-    let showedList = []
-    topList.map((e) => {
-        showedList.push(<TopItem id={e.id} name={e.name} img={e.img} price={e.price}></TopItem>)
-    })
-
-    const useStyles = makeStyles((theme) => ({
-
-    }));
-
     const images = [
         { url: "/img/1.png" },
         { url: "/img/2.png" },
@@ -40,7 +31,6 @@ const MainTitle = () => {
         <>
             <div className="slider">
                 <div className="figure">
-
                     <img src={images[0].url} alt></img>
                     <img src={images[1].url} alt></img>
                     <img src={images[2].url} alt></img>
@@ -48,8 +38,10 @@ const MainTitle = () => {
             </div>
 
             <Typography variant="h3" component="h3" gutterBottom>Top Rate</Typography>
-            <Grid container spacing={3}>
-                {showedList}
+            <Grid container justify="center" spacing={3} >
+                {topList.map((e) => (
+                    <TopItem id={e.id} name={e.name} img={e.img} price={e.price}></TopItem>
+                ))}
             </Grid>
         </>
     )
