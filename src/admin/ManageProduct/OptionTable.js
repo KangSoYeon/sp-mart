@@ -38,14 +38,36 @@ const OptionTable = ({ title, sub, handleOptions, onRemoveItem }) => {
     const onRemoveItemList = (n) => {
         setRows(rows.filter(r => r !== n))
     }
+
     if (saved) {
         return (
             <>
-            <p>{title}</p>
-            {/* 아래에 저장 내용 어떻게 보여줄건지 결정하자,, */}
-            {/* {option.current[title].map(o => (
-                o.additionalPrice
-            ))} */}
+                <TableContainer>
+                    <Table aria-label={title} size="small">
+                        <TableHead>
+                            <Typography>{title}</Typography>
+                            <TableRow>
+                                <TableCell>항목 </TableCell>
+                                <TableCell align="right">추가금액</TableCell>
+                                <TableCell align="right">재고수량</TableCell>
+                                <TableCell align="right">사용여부</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row) => (
+                                <TableRow key={row.name}>
+                                    <TableCell component="th" scope="row">
+                                        {row}
+                                    </TableCell>
+                                    <TableCell align="right">{option.current[title][row]["additionalPrice"]}</TableCell>
+                                    <TableCell align="right">{option.current[title][row]["stock"]}</TableCell>
+                                    <TableCell align="right">{option.current[title][row]["on"] && "Yes" || "No"}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                    <Button variant="outlined" onClick={() => onRemoveItem(title)}>삭제</Button>
+                </TableContainer>
             </>
         )
     } else {
@@ -85,9 +107,9 @@ const OptionTable = ({ title, sub, handleOptions, onRemoveItem }) => {
                             ))}
                         </TableBody>
                     </Table>
+                    <Button variant="outlined" onClick={() => saveOption(option.current)}>추가</Button>
+                    <Button variant="outlined" onClick={() => onRemoveItem(title)}>삭제</Button>
                 </TableContainer>
-                <Button variant="outlined" onClick={() => saveOption(option.current)}>추가</Button>
-                <Button variant="outlined" onClick={() => onRemoveItem(title)}>삭제</Button>
                 <Box m={3} />
             </>
         )
