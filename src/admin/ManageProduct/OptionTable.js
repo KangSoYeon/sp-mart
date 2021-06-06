@@ -32,7 +32,9 @@ const OptionTable = ({ title, sub, handleOptions, onRemoveItem }) => {
         //ui적인 변화
         //table사라지고
         setSaved(true);
+        // handleOptions(title, option.current)
         handleOptions(title, option.current)
+        
     }
 
     const onRemoveItemList = (n) => {

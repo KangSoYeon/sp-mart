@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom';
+import { Grid } from "@material-ui/core"
 import app from '../../base'
 
 const ProductDetail = () => {
@@ -11,8 +12,9 @@ const ProductDetail = () => {
 
     const fetchData = async () => {
         const doc = await app.firestore().collection("products").doc(productId).get();
-        if ( doc.exists ) {
+        if (doc.exists) {
             setProduct(doc.data())
+            console.log(doc.data().options[0])
         } else {
             alert("해당 게시글을 찾을 수 없습니다.")
             navigate("/");
@@ -21,14 +23,31 @@ const ProductDetail = () => {
 
     useEffect(() => {
         fetchData();
-        
     }, [productId])
 
     return (
         <>
-            <div>{productId}</div>
-            <div>{product.name}</div>
-            <img src={product.img}></img>
+            {product.category!==undefined && product.category.map(c =>
+                <div>{c} > {product.name}</div>)}
+            <Grid container spacing={2}>
+                <Grid item item sm={12} md={6} lg={6} >
+                    <img src={product.img} width={400}></img>
+                </Grid>
+                <Grid item sm={12} md={6} lg={6} >
+                    <div>상품명 {product.name}</div>
+                    <div>시중가격 {product.originalPrice}</div>
+                    <div>판매가격 {product.salePrice}</div>
+                    {/* option 반복문으로 뽑기 스타또~~ */}
+                    {product.options!==undefined && product.options.map(optionTitle => (
+                        Object.keys(optionTitle).forEach((k) => {
+                            // optionTitle[k].map(optionDetail => {
+                            //     optionDetail.on && k
+                            // })
+                        })
+                    ))}
+                    
+                </Grid>
+            </Grid>
         </>
     )
 }
