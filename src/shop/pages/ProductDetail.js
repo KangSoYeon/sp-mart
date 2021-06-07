@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom';
 import { Grid } from "@material-ui/core"
+import ProductDetailOption from '../components/ProductDetailOption'
 import app from '../../base'
 
 const ProductDetail = () => {
@@ -27,7 +28,7 @@ const ProductDetail = () => {
 
     return (
         <>
-            {product.category!==undefined && product.category.map(c =>
+            {product.category !== undefined && product.category.map(c =>
                 <div>{c} > {product.name}</div>)}
             <Grid container spacing={2}>
                 <Grid item item sm={12} md={6} lg={6} >
@@ -37,15 +38,9 @@ const ProductDetail = () => {
                     <div>상품명 {product.name}</div>
                     <div>시중가격 {product.originalPrice}</div>
                     <div>판매가격 {product.salePrice}</div>
-                    {/* option 반복문으로 뽑기 스타또~~ */}
-                    {product.options!==undefined && product.options.map(optionTitle => (
-                        Object.keys(optionTitle).forEach((k) => {
-                            // optionTitle[k].map(optionDetail => {
-                            //     optionDetail.on && k
-                            // })
-                        })
+                    {product.options !== undefined && product.options.map(option =>(
+                        <ProductDetailOption option={option} ></ProductDetailOption>
                     ))}
-                    
                 </Grid>
             </Grid>
         </>

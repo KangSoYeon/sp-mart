@@ -106,8 +106,6 @@ const NewProduct = () => {
 
         })
         setCategoryList(o => [...cList])
-
-
     }
 
     useEffect(() => {
@@ -117,7 +115,7 @@ const NewProduct = () => {
     }, [])
 
     let categoryListShow = [];
-    categoryList.map((c) => {
+    categoryList.map((c, index) => {
         let categoryChild = []
         if (c.group !== undefined) {
             for (let i = 0; i < c.child.length; i++) {

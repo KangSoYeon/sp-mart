@@ -56,8 +56,8 @@ const OptionTable = ({ title, sub, handleOptions, onRemoveItem }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.name}>
+                            {rows.map((row, index) => (
+                                <TableRow key={index}>
                                     <TableCell component="th" scope="row">
                                         {row}
                                     </TableCell>
@@ -88,8 +88,8 @@ const OptionTable = ({ title, sub, handleOptions, onRemoveItem }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.name}>
+                            {rows.map((row, index) => (
+                                <TableRow key={index}>
                                     <TableCell component="th" scope="row">
                                         {row}
                                     </TableCell>

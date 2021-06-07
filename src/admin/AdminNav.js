@@ -25,10 +25,10 @@ const AdminTab = ({ items }) => {
   return (
     <Grid>
       {
-        items.map((item) => (
+        items.map((item, index) => (
           <NavItem
             href={item.href}
-            key={item.title}
+            key={index}
             title={item.title}
           />
         ))
