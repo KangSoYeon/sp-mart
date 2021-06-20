@@ -80,6 +80,7 @@ const NavBar = () => {
                 {category1}
             </Toolbar>
             <br />
+            {/* category 2 는 안 씀    */}
             {category2.length !== 0 && <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
                 {category2}
             </Toolbar>}

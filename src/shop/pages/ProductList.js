@@ -10,6 +10,7 @@ const ProductList = () => {
     const [products, setProducts] = useState([])
 
     const fetchingData = async () => {
+
         const query = await app.firestore().collection("products").where("category", "array-contains", listId).get();
         let listTemp = []
         query.forEach((p) => {

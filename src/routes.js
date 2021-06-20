@@ -8,7 +8,7 @@ import ManageCustomer from './admin/ManageCustomer/Main';
 import ManageOrder from './admin/ManageOrder/Main';
 import ManageProduct from './admin/ManageProduct/Main';
 import EditMain from './admin/ManageProduct/EditMain'
-import NewProduct from './admin/ManageProduct/NewProduct2'
+import NewProduct from './admin/ManageProduct/NewProduct'
 import EditProduct from './admin/ManageProduct/EditProduct'
 
 
