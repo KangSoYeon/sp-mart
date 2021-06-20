@@ -36,8 +36,9 @@ const MainTitle = () => {
                     <img src={images[2].url} alt></img>
                 </div>
             </div>
-
-            <Typography variant="h3" component="h3" gutterBottom>Top Rate</Typography>
+            <Grid container justify="center" >
+                <Typography variant="h3" component="h3" gutterBottom>Top Rate</Typography>
+            </Grid>
             <Grid container justify="center" spacing={3} >
                 {topList.map((e) => (
                     <TopItem id={e.id} name={e.name} img={e.img} price={e.price}></TopItem>

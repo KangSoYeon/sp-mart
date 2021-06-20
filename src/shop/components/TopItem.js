@@ -96,16 +96,8 @@ const TopItem = ({ id, name, img, price }) => {
                 key={name}
                 className={classes.image}
                 focusVisibleClassName={classes.focusVisible}
-                // style={{
-                    
-                // }}
             >
-                <span
-                    className={img}
-                    style={{
-                        backgroundImage: `url(${img})`,
-                    }}
-                />
+                <img className={classes.image} src={img} alt></img>
                 <span className={classes.imageBackdrop} />
                 <span className={classes.imageButton}>
                     <Typography
@@ -119,18 +111,6 @@ const TopItem = ({ id, name, img, price }) => {
                     </Typography>
                 </span>
             </ButtonBase>
-            {/* </div> */}
-            {/* <Grid item xs={3} sm={3} onClick={clickHandler}>
-                <div class="grid">
-                    <figure className="effect-lily">
-                        <img src={img} alt={img} />
-                        <figcaption>
-                            <h2>{name}</h2>
-                            <span>{price}</span>
-                        </figcaption>
-                    </figure>
-                </div>
-            </Grid> */}
         </Grid>
 
     )
